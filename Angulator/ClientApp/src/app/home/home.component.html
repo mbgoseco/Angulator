@@ -1,5 +1,5 @@
 <app-display (displayEvent)="display=$event" [currentNum]="display"></app-display>
-<app-num-keys [currentNum]="display"></app-num-keys>
+<app-num-keys (displayEvent)="display=$event" [currentNum]="display"></app-num-keys>
 
 <!--<h1>Hello, world!</h1>
 <p>Welcome to your new single-page application, built with:</p>
