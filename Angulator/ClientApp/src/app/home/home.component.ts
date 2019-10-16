@@ -5,5 +5,5 @@ import { Component } from '@angular/core';
   templateUrl: './home.component.html',
 })
 export class HomeComponent {
-    public display = 0;
+    public display: string = '0';
 }
