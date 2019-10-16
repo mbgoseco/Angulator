@@ -14,3 +14,7 @@ h2 {
   width: 5rem;
   text-align: center;
 }
+
+h2:active {
+  background-color: dodgerblue;
+}

@@ -17,25 +17,34 @@ export class NumKeysComponent {
 
     @Input() public currentNum;
     @Output() public displayEvent = new EventEmitter();
-    public digit: number;
-    public decimalUsed = false;
 
     constructor() {
 
     }
 
     updateNum(event) {
-        this.digit = parseInt(event.target.innerHTML);
-        console.log(`number updated with digit ${this.digit}`);
-        this.displayEvent.emit((this.currentNum * 10) + this.digit);
-        // TODO: Add case for right side decimal updating
+        if (parseInt(this.currentNum) === 0 && !this.currentNum.includes('.')) {
+            this.currentNum = '';
+        }
+        if (parseFloat(this.currentNum) < 0) {
+            this.currentNum = (this.currentNum + event.target.innerHTML).slice(0, 17);
+        } else {
+            this.currentNum = (this.currentNum + event.target.innerHTML).slice(0, 16);
+        }
+        this.displayEvent.emit(this.currentNum);
     }
 
     negate() {
-
+        if (this.currentNum === '') {
+            this.displayEvent.emit('0');
+        } else {
+            this.displayEvent.emit((-(parseFloat(this.currentNum))).toString());
+        }
     }
 
     useDecimal() {
-
+        this.currentNum += '.';
+        this.currentNum = this.currentNum.replace(/(\..*)\./g, '$1');
+        this.displayEvent.emit(this.currentNum);
     }
 }
