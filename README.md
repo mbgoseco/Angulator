@@ -7,4 +7,5 @@ Implementing Angular components, this app will function just like your standard 
 
 ## Change Log
 10/15/19: Changed input display from number to text type. Added regex to allow only inputs that yield a complete, valid number to display as string in the input field.
+
 10/16/19: Math and clear screen operations working as intended. Will continue to test for edge cases.
