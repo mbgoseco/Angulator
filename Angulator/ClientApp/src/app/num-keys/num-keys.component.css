@@ -2,20 +2,53 @@
   width: 25%;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr;
-  grid-column-gap: 1vw;
+  grid-column-gap: 21%;
   justify-items: center;
   align-items: center;
   justify-content: center;
 }
 
-h2 {
-  background-color: deepskyblue;
+.funcs {
+  background-color: rgb(0, 110, 230);
+  border: 3px outset rgb(0, 150, 230);
   border-radius: 5px;
   width: 5rem;
   padding: 0.3rem;
   text-align: center;
+  color: white;
 }
 
-h2:active {
-  background-color: dodgerblue;
+  .funcs:active {
+    background-color: rgb(0, 70, 230);
+    border: 3px inset rgb(0, 110, 230);
+  }
+
+.nums {
+  background-color: rgb(147, 147, 147);
+  border: 3px outset rgb(187, 187, 187);
+  border-radius: 5px;
+  width: 5rem;
+  padding: 0.3rem;
+  text-align: center;
+  color: white;
 }
+
+  .nums:active {
+    background-color: rgb(107, 107, 107);
+    border: 3px inset rgb(147, 147, 147);
+  }
+
+#equals {
+  background-color: rgb(255, 187, 0);
+  border: 3px outset rgb(255, 220, 125);
+  border-radius: 5px;
+  width: 5rem;
+  padding: 0.3rem;
+  text-align: center;
+  color: black;
+}
+
+  #equals:active {
+    background-color: rgb(215, 147, 0);
+    border: 3px inset rgb(215, 180, 85);
+  }

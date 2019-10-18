@@ -1,14 +1,15 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { isNumber } from 'util';
 
 @Component({
     selector: 'app-num-keys',
     template: `
       <section class="container">
-        <h2 (click)="operate($event)">x^y</h2><h2 (click)="clearEntry()">CE</h2><h2 (click)="clearAll()">C</h2><h2 (click)="operate($event)">/</h2>
-        <h2 (click)="updateNum($event)">7</h2><h2 (click)="updateNum($event)">8</h2><h2 (click)="updateNum($event)">9</h2><h2 (click)="operate($event)">X</h2>
-        <h2 (click)="updateNum($event)">4</h2><h2 (click)="updateNum($event)">5</h2><h2 (click)="updateNum($event)">6</h2><h2 (click)="operate($event)">-</h2>
-        <h2 (click)="updateNum($event)">1</h2><h2 (click)="updateNum($event)">2</h2><h2 (click)="updateNum($event)">3</h2><h2 (click)="operate($event)">+</h2>
-        <h2 (click)="updateNum($event)">0</h2><h2 (click)="negate()">+/-</h2><h2 (click)="useDecimal()">.</h2><h2 (click)="equals()">=</h2>
+        <h2 class="funcs" (click)="operate($event)">x^y</h2><h2 class="funcs" (click)="clearEntry()">CE</h2><h2 class="funcs" (click)="clearAll()">C</h2><h2 class="funcs" (click)="operate($event)">/</h2>
+        <h2 class="nums" (click)="updateNum($event)">7</h2><h2 class="nums" (click)="updateNum($event)">8</h2><h2 class="nums" (click)="updateNum($event)">9</h2><h2 class="funcs" (click)="operate($event)">X</h2>
+        <h2 class="nums" (click)="updateNum($event)">4</h2><h2 class="nums" (click)="updateNum($event)">5</h2><h2 class="nums" (click)="updateNum($event)">6</h2><h2 class="funcs" (click)="operate($event)">-</h2>
+        <h2 class="nums" (click)="updateNum($event)">1</h2><h2 class="nums" (click)="updateNum($event)">2</h2><h2 class="nums" (click)="updateNum($event)">3</h2><h2 class="funcs" (click)="operate($event)">+</h2>
+        <h2 class="nums" (click)="updateNum($event)">0</h2><h2 class="nums" (click)="negate()">+/-</h2><h2 class="nums" (click)="useDecimal()">.</h2><h2 id="equals" (click)="equals()">=</h2>
       </section>
     `,
     styleUrls: ['./num-keys.component.css']
@@ -64,10 +65,13 @@ export class NumKeysComponent {
     }
 
     operate(event) {
-        if (this.operator != '') {  // In case of chain operations
+        if (this.operator != '' && (!isNaN(this.currentNum)) && this.currentNum != '') {  // In case of chain operations
             this.equals();
         }
         this.operator = event.target.innerHTML;
+        if (isNaN(this.currentNum) || this.currentNum == '') {
+            this.currentNum = this.num1.toString();
+        }
         this.num1 = parseFloat(this.currentNum);
         this.currentNum = '';
     }
@@ -75,22 +79,27 @@ export class NumKeysComponent {
     equals() {
         switch (this.operator) {
             case '+':
+                if (isNaN(this.currentNum) || this.currentNum == '') { this.currentNum = this.num1; }
                 this.currentNum = (this.num1 + parseFloat(this.currentNum)).toString();
                 this.displayEvent.emit(this.currentNum);
                 break;
             case '-':
+                if (isNaN(this.currentNum) || this.currentNum == '') { this.currentNum = this.num1; }
                 this.currentNum = (this.num1 - parseFloat(this.currentNum)).toString();
                 this.displayEvent.emit(this.currentNum);
                 break;
             case 'X':
+                if (isNaN(this.currentNum) || this.currentNum == '') { this.currentNum = this.num1; }
                 this.currentNum = (this.num1 * parseFloat(this.currentNum)).toString();
                 this.displayEvent.emit(this.currentNum);
                 break;
             case '/':
+                if (isNaN(this.currentNum) || this.currentNum == '') { this.currentNum = this.num1; }
                 this.currentNum = (this.num1 / parseFloat(this.currentNum)).toString();
                 this.displayEvent.emit(this.currentNum);
                 break;
             case 'x^y':
+                if (isNaN(this.currentNum) || this.currentNum == '') { this.currentNum = this.num1; }
                 this.currentNum = (Math.pow(this.num1, parseFloat(this.currentNum))).toString();
                 this.displayEvent.emit(this.currentNum);
                 break;

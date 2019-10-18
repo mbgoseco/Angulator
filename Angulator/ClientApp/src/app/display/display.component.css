@@ -2,3 +2,13 @@ section{
   text-align: center;
   width: auto;
 }
+
+input {
+  overflow: visible;
+  padding: 0 5px 0 5px;
+  margin-bottom: 9px;
+  background-color: rgb(130, 150, 150);
+  font-weight: 600;
+  font-size: 1.4rem;
+  text-align-last: end;
+}

@@ -1,0 +1,10 @@
+#calculator {
+  background-color: rgb(75, 75, 75);
+  border: 9px outset rgb(95, 95, 95);
+  border-radius: 10px;
+  width: 36%;
+  min-width: 380px;
+  padding: 8px;
+  margin-left: auto;
+  margin-right: auto;
+}
