@@ -5,7 +5,6 @@ import { Component, EventEmitter, Output, Input } from '@angular/core';
     template: `
       <section>
         <input [(ngModel)]="num" (input)="sendNum($event)" type="text" maxlength="16" autofocus>
-        {{num}}
       </section>
     `,
     styleUrls: ['./display.component.css']
