@@ -18,6 +18,7 @@ export class NumKeysComponent {
 
     @Input() public displayNum;
     @Output() public displayEvent = new EventEmitter();
+    public newNum = false;
     public currentNum = '0';
     public num1 = 0;
     public operator = '';
@@ -35,29 +36,35 @@ export class NumKeysComponent {
         }
     }
 
+    clearNum() {
+        if (this.newNum) {
+            this.displayNum = '';
+            this.currentNum = '';
+            this.newNum = false;
+        }
+    }
+
     updateNum(event) {
-        console.log(`DN before update ${this.displayNum}`);
         this.checkDisplay();
+        this.clearNum();
         this.lastOperator = '';
         if (parseInt(this.displayNum) === 0 && !this.displayNum.includes('.')) {
             this.currentNum = '';
         }
         if (parseFloat(this.displayNum) < 0) {
-            console.log(`DN inside < 0 update ${this.displayNum}`);
             this.currentNum = (this.currentNum + event.target.innerHTML).slice(0, 17);
         } else {
-            console.log(`DN inside else update ${this.displayNum}`);
             this.currentNum = (this.currentNum + event.target.innerHTML).slice(0, 16);
         }
         this.lastNum = this.currentNum;
         this.displayNum = this.currentNum;
         this.displayEvent.emit(this.currentNum);
-        console.log(`DN after update ${this.displayNum}`);
     }
 
     negate() {
         this.lastOperator = '';
         this.checkDisplay();
+        this.clearNum();
         if (this.currentNum == '') {
             this.currentNum = '0';
             this.lastNum = this.currentNum;
@@ -74,6 +81,7 @@ export class NumKeysComponent {
     useDecimal() {
         this.lastOperator = '';
         this.checkDisplay();
+        this.clearNum();
         this.currentNum += '.';
         this.currentNum = this.currentNum.replace(/(\..*)\./g, '$1');
         this.lastNum = this.currentNum;
@@ -98,23 +106,18 @@ export class NumKeysComponent {
     }
 
     operate(event) {
-        console.log(`CN before chain case ${this.currentNum}`);
-        console.log(`N1 before chain case ${this.num1}`);
         if (this.operator != '' && (!isNaN(parseFloat(this.currentNum))) && this.currentNum != '') {  // Chain operations
             this.equals();
         }
+        this.newNum = true;
         this.checkDisplay();
         this.operator = event.target.innerHTML;
         if (isNaN(parseFloat(this.currentNum)) || this.currentNum == '') {
             this.currentNum = (this.num1).toString();
         }
         this.num1 = parseFloat(this.currentNum);
-        this.currentNum = '';
-        this.displayNum = '';
         this.lastOperator = '';
-        this.displayNum = this.currentNum;
-        console.log(`CN at end of operate ${this.currentNum}`);
-        console.log(`N1 at end of operate ${this.num1}`);
+        this.clearNum();
     }
 
     equals() {
@@ -155,8 +158,6 @@ export class NumKeysComponent {
         this.displayNum = this.currentNum;
         this.lastOperator = this.operator;
         this.operator = '';
-        console.log(`DN at end of equals() ${this.displayNum}`);
-        console.log(`CN at end of equals() ${this.currentNum}`);
-        console.log(`N1 at end of equals() ${this.num1}`);
+        this.newNum = true;
     }
 }
