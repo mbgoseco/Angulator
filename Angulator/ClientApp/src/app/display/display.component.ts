@@ -12,7 +12,7 @@ import { Component, EventEmitter, Output, Input } from '@angular/core';
 
 export class DisplayComponent {
 
-    @Input('currentNum') public num;
+    @Input('displayNum') public num;
     @Output() public displayEvent = new EventEmitter();
 
     constructor() {
