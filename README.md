@@ -9,4 +9,4 @@ Implementing Angular components, this app will function just like your standard 
 * 10/15/19: Changed input display from number to text type. Added regex to allow only inputs that yield a complete, valid number to display as string in the input field.
 * 10/16/19: Math and clear screen operations working as intended. Will continue to test for edge cases.
 * 10/17/19: Added styling. Fixed some bugs regarding chain operations and operations with blank inputs.
-* 10/18/19: Now able to chain operations with the "equals" button using the last entered value and operator (e.g. 5 + 3 +[=] 3 +[=] 3 +[=] 3).
+* 10/18/19: Now able to chain operations with the "equals" button using the last entered value and operator (e.g. 5 + 3 [=]+ 3 [=]+ 3 [=]+ 3). Fixed bug to prevent action from spamming operator buttons.
