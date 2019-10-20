@@ -10,3 +10,4 @@ Implementing Angular components, this app will function just like your standard 
 * 10/16/19: Math and clear screen operations working as intended. Will continue to test for edge cases.
 * 10/17/19: Added styling. Fixed some bugs regarding chain operations and operations with blank inputs.
 * 10/18/19: Now able to chain operations with the "equals" button using the last entered value and operator (e.g. 5 + 3 [=]+ 3 [=]+ 3 [=]+ 3). Fixed bug to prevent action from spamming operator buttons. Added a variable to hold state of current number and separate dependency from the display input, but also syncronized their state when entering numbers from either keyboard or keypad.
+* 10/19/19: Fixed bug that prevented number keys from displaying a new numnber after using an operator.
