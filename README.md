@@ -1,6 +1,7 @@
 # Angulator
 
-A calculator app using Angular components designed for the purpose of practicing and building my knowledge of Angular. 
+A calculator app using Angular components designed for the purpose of practicing and building my knowledge of Angular.  
+Live demo can be viewed (here)[https://mbgoseco.github.io/Angulator/]
 
 ## Description
 Implementing Angular components, this app will function just like your standard handheld calculator. A user can enter numbers from the keyboard or using the on-screen keypad, and perform basic mathematic operations. Basic add, subtract, multiply, divide operations (and chaining operations) will be possible, with more operations planned for the future.
