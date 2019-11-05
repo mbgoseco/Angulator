@@ -1,23 +1,25 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
+import { KeypadService } from '../keypad.service';
 
 @Component({
     selector: 'app-num-keys',
     template: `
       <section class="container">
-        <h2 class="funcs" (click)="operate($event)">x^y</h2><h2 class="funcs" (click)="clearEntry()">CE</h2><h2 class="funcs" (click)="clearAll()">C</h2><h2 class="funcs" (click)="operate($event)">/</h2>
-        <h2 class="nums" (click)="updateNum($event)">7</h2><h2 class="nums" (click)="updateNum($event)">8</h2><h2 class="nums" (click)="updateNum($event)">9</h2><h2 class="funcs" (click)="operate($event)">X</h2>
-        <h2 class="nums" (click)="updateNum($event)">4</h2><h2 class="nums" (click)="updateNum($event)">5</h2><h2 class="nums" (click)="updateNum($event)">6</h2><h2 class="funcs" (click)="operate($event)">-</h2>
-        <h2 class="nums" (click)="updateNum($event)">1</h2><h2 class="nums" (click)="updateNum($event)">2</h2><h2 class="nums" (click)="updateNum($event)">3</h2><h2 class="funcs" (click)="operate($event)">+</h2>
-        <h2 class="nums" (click)="updateNum($event)">0</h2><h2 class="nums" (click)="negate()">+/-</h2><h2 class="nums" (click)="useDecimal()">.</h2><h2 id="equals" (click)="equals()">=</h2>
+        <h2 class="funcs" (click)="operate(4)">x^y</h2><h2 class="funcs" (click)="clearEntry()">CE</h2><h2 class="funcs" (click)="clearAll()">C</h2><h2 class="funcs" (click)="operate(0)">/</h2>
+        <h2 class="nums" (click)="updateNum(7)">7</h2><h2 class="nums" (click)="updateNum(8)">8</h2><h2 class="nums" (click)="updateNum(9)">9</h2><h2 class="funcs" (click)="operate(1)">X</h2>
+        <h2 class="nums" (click)="updateNum(4)">4</h2><h2 class="nums" (click)="updateNum(5)">5</h2><h2 class="nums" (click)="updateNum(6)">6</h2><h2 class="funcs" (click)="operate(2)">-</h2>
+        <h2 class="nums" (click)="updateNum(1)">1</h2><h2 class="nums" (click)="updateNum(2)">2</h2><h2 class="nums" (click)="updateNum(3)">3</h2><h2 class="funcs" (click)="operate(3)">+</h2>
+        <h2 class="nums" (click)="updateNum(0)">0</h2><h2 class="nums" (click)="negate()">+/-</h2><h2 class="nums" (click)="useDecimal()">.</h2><h2 id="equals" (click)="equals()">=</h2>
       </section>
     `,
     styleUrls: ['./num-keys.component.css']
 })
 
-export class NumKeysComponent {
+export class NumKeysComponent implements OnInit {
 
     @Input() public displayNum;
     @Output() public displayEvent = new EventEmitter();
+    public keypad = [];
     public newNum = false;
     public currentNum = '0';
     public num1 = 0;
@@ -25,8 +27,12 @@ export class NumKeysComponent {
     public lastOperator = '';
     public lastNum = '';
 
-    constructor() {
+    constructor(private _keypadService: KeypadService) {
+    }
 
+    ngOnInit() {
+        this._keypadService.getKeypad()
+            .subscribe(data => this.keypad = data);
     }
 
     checkDisplay() {
@@ -44,7 +50,7 @@ export class NumKeysComponent {
         }
     }
 
-    updateNum(event) {
+    updateNum(idx) {
         this.checkDisplay();
         this.clearNum();
         this.lastOperator = '';
@@ -52,9 +58,9 @@ export class NumKeysComponent {
             this.currentNum = '';
         }
         if (parseFloat(this.displayNum) < 0) {
-            this.currentNum = (this.currentNum + event.target.innerHTML).slice(0, 17);
+            this.currentNum = (this.currentNum + this.keypad[0].numkeys[idx]).slice(0, 17);
         } else {
-            this.currentNum = (this.currentNum + event.target.innerHTML).slice(0, 16);
+            this.currentNum = (this.currentNum + this.keypad[0].numkeys[idx]).slice(0, 16);
         }
         this.lastNum = this.currentNum;
         this.displayNum = this.currentNum;
@@ -105,13 +111,13 @@ export class NumKeysComponent {
         this.displayEvent.emit(this.currentNum);
     }
 
-    operate(event) {
+    operate(idx) {
         if (this.operator != '' && (!isNaN(parseFloat(this.currentNum))) && this.currentNum != '') {  // Chain operations
             this.equals();
         }
         this.newNum = true;
         this.checkDisplay();
-        this.operator = event.target.innerHTML;
+        this.operator = this.keypad[0].operators[idx];
         if (isNaN(parseFloat(this.currentNum)) || this.currentNum == '') {
             this.currentNum = (this.num1).toString();
         }
